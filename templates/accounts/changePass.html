@@ -1,0 +1,13 @@
+{% extends "categories/base.html" %}
+{% load widget_tweaks %}
+
+
+{% block title %}Change Password{% endblock %}
+
+{% block main %}
+<form method="post" class="container" novalidate>
+    {% csrf_token %}
+    {% include 'categories/includes/form.html' %}
+    <button type="submit" class="btn btn-success mt-2">change</button>
+  </form>
+{% endblock main %}

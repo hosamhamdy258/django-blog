@@ -1,0 +1,28 @@
+{% extends "categories/base.html" %}
+{% block title %}Sign Up{% endblock %}
+{% block main %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="card">
+          <div class="card-body text-center bg-light border-dark">
+            <h3 class="card-title">Sign up</h3>
+          </div>
+          <div class="card-body">
+            <form method="post" novalidate>
+              {% csrf_token %}
+              {% include 'categories/includes/form.html' %}
+              <br>
+              <div class="text-center">
+              <button type="submit" class="btn btn-primary btn-block mt-2">Create an account</button>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer text-muted text-center">
+            Already have an account? <a href="{% url 'login' %}">Log in</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock main %}

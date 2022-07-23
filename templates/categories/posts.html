@@ -1,0 +1,52 @@
+{% extends "categories/base.html" %}
+
+{% block title %}{{category.name}}{% endblock %}
+
+{% block main %}
+    <div class="container">
+      {% if user.is_authenticated == True %}
+<!--    add post button-->
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-primary" type="button">
+          <strong>
+            <a
+            href="{% url 'new_post' category_id=category.pk %}"
+            class="nav-link mb-1"
+            >Add post</a>
+          </strong>
+        </button>
+      </div>
+
+      {% endif %}
+    </div>
+<!--the post contents-->
+{% for post in category.posts.all %}
+<div class="card p-2 m-2">
+  
+<div class="row g-0">
+ 
+
+    <div class="col-md-6 m-auto">
+      <div class="col m-auto">
+        <a href="{% url 'post' category_id=category.pk post_id=post.pk %}" class="btn btn-light mb-1" >
+          <img src="/media/{{post.image}}" class="img-fluid img-responsive rounded-start" alt="" />
+        </a>
+        
+     </div>
+        <div class="card-body">
+          <a href="{% url 'post' category_id=category.pk post_id=post.pk %}" class="btn btn-light mb-1" >{{post.title}}</a>
+         
+          <h6 class="card-subtitle mb-2 text-muted">{{post.category}}</h6>
+          <p class="card-text fs-3">{{post.content}}</p>
+          <p class="card-text"><strong>{{post.created_by.username}}</strong> {{post.created_dt}}</p>
+       </div>
+     
+    </div>
+ 
+  </div>
+
+
+</div>
+{% endfor %}
+
+{% endblock main %}

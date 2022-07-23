@@ -1,0 +1,21 @@
+* {
+    box-sizing: border-box;
+}
+.myNavLink{
+    display:flex;
+    justify-content:flex-end;
+}
+nav ul li {
+  margin:5px;
+}
+.list-group-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+aside ul li a {
+    text-decoration:none;
+}
+.navbar-brand{
+    font-size:28px;
+}

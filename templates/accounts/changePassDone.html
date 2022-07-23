@@ -1,0 +1,14 @@
+{% extends "categories/base.html" %}
+{% load widget_tweaks %}
+
+
+{% block title %}change password success{% endblock %}
+
+{% block main %}
+<div class="alert alert-success" role="alert">
+    <strong>Success!</strong> Your password has been changed!
+  </div>
+  <a href="{% url 'home' %}" class="btn btn-secondary">Return to home page</a>
+{% endblock main %}
+
+

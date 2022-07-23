@@ -1,0 +1,22 @@
+{% extends "categories/base.html" %}
+
+{% block title %}New Category{% endblock %}
+
+
+
+{% block main %}
+<form method="post" class="container">
+    {% csrf_token %}
+    <div class="form-group mb-3">
+      <label for="id_subject" class="mb-2">Name</label>
+      <input type="text" class="form-control" id="id_subject" name="name">
+    </div>
+          <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-primary" type="submit">
+          <strong>
+             Add
+          </strong>
+        </button>
+      </div>
+  </form>
+{% endblock main %}
