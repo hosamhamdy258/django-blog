@@ -1,0 +1,14 @@
+
+asgiref
+autopep8
+Django
+django-jazzmin
+django-taggit
+django-widget-tweaks
+Pillow 
+psycopg2-binary
+pycodestyle
+setuptools
+sqlparse
+toml
+wheel
