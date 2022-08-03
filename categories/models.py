@@ -7,6 +7,7 @@ from taggit.managers import TaggableManager
 
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
+    subscribe = models.ManyToManyField(User)
 
     def __str__(self):
         return self.name

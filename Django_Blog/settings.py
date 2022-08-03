@@ -99,9 +99,9 @@ WSGI_APPLICATION = 'Django_Blog.wsgi.application'
 DATABASES = {
     'default': {
        'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'shopapp',
-       'USER': 'djangomaster',
-       'PASSWORD': '1234',
+       'NAME': 'postgres',
+       'USER': 'postgres',
+       'PASSWORD': '3496',
        'HOST': 'localhost',
        'PORT': '5432',
    }

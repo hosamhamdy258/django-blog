@@ -25,9 +25,6 @@
             programmers about life topics and maybe , maybe sometimes
             programming topics
           </p>
-          <a class="btn btn-link p-0" href="#"
-            >Continue reading <i class="fa fa-long-arrow-alt-right"></i
-          ></a>
         </div>
       </div>
     </div>
@@ -53,8 +50,13 @@
             <a href="{% url 'category_posts' category.pk%}"
               ><strong>{{category.name}}</strong></a
             >
-            <a href="" class="btn btn-primary float-end">Subscribe</a>
-          </li>
+            {% if request.user in category.subscribe.all %}
+              <a href="{% url 'subscribe_unsubscribe' category.id %}" class="btn btn-primary float-end">Unsubscribe</a>
+              </li>
+            {% else %}
+              <a href="{% url 'subscribe_unsubscribe' category.id %}" class="btn btn-primary float-end">Subscribe</a>
+              </li>
+            {% endif %}
           {% endfor %}
         </ul>
       </div>

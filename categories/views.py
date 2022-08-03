@@ -1,7 +1,7 @@
 from traceback import print_tb
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import is_valid_path
+from django.urls import is_valid_path, reverse
 from .models import Category, Post, Comment
 from .forms import NewPostForm, NewCommentForm
 from django.contrib.auth.decorators import login_required
@@ -30,8 +30,6 @@ def searchPosts(req):
     posts = Post.objects.filter(title__contains=req.POST['search']).order_by('-created_dt')
     return render(req, 'categories/home.html', {'categories': categories, "posts": posts})
 
-    
-    
 
 def new_category(req):
     if req.method == 'POST':
@@ -46,7 +44,10 @@ def new_category(req):
 
 def category_posts(req, category_id):
     category = get_object_or_404(Category, pk=category_id)
-    return render(req, 'categories/posts.html', {'category': category})
+    # posts = Post.objects.all().order_by('-created_dt')
+    posts = category.posts.all().order_by('-created_dt')
+    # return render(req, 'categories/posts.html', {'category': category})
+    return render(req, 'categories/posts.html', {'posts': posts, 'category': category})
 
 
 @login_required
@@ -97,7 +98,7 @@ def post(req, category_id, post_id):
 
 class PostEdit(UpdateView):
     model = Post
-    fields = ('title', 'content',"tags")
+    fields = ('title', 'content', "tags")
     template_name = 'categories/editPost.html'
     pk_url_kwarg = 'post_id'
     context_object_name = 'post'
@@ -108,4 +109,31 @@ class PostEdit(UpdateView):
         post.updated_dt = timezone.now()
         post.save()
         form.save_m2m()
-        return redirect('post',category_id=post.category.id,post_id=post.id)
+        return redirect('post', category_id=post.category.id, post_id=post.id)
+
+
+def subscribe_unsubscribe(req, category_id):
+    category = get_object_or_404(Category, pk=category_id)
+    if req.user in category.subscribe.all():
+        category.subscribe.remove(req.user)
+    else:
+        category.subscribe.add(req.user)
+
+    return redirect(reverse('home'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

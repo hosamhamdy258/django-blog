@@ -1,0 +1,27 @@
+{% extends "categories/base.html" %}
+
+
+{% block main %}
+    {% for user in users%}
+        <h1>
+            {{user.username}}
+        </h1>
+        <div>
+        {% if user.is_active %}
+          <h1>
+            <button>
+                <a href="{% url 'block' user.id%}"> Block </a>
+            </button>
+        </h1>
+
+        {% else %}
+          <h1>
+            <button>
+                <a href="{% url 'block' user.id%}"> Unblock </a>
+            </button>
+        </h1>
+        {% endif %}
+        </div>
+    {% endfor%}
+
+{% endblock main %}
