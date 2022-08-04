@@ -1,13 +1,14 @@
 from traceback import print_tb
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import is_valid_path
+from django.urls import is_valid_path, reverse
 from .models import Category, Post, Comment
 from .forms import NewPostForm, NewCommentForm
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.views.generic import UpdateView
 from django.utils import timezone
+from urllib import request
 
 
 # Create your views here.
@@ -95,6 +96,17 @@ def post(req, category_id, post_id):
     return render(req, 'categories/post.html', {'post': post, 'form': form})
 
 
+#like_dislike
+def like_dislike(req,post_id):
+    print("like function working")
+    post = get_object_or_404(Post, pk=post_id)
+    if req.user in post.like.all():
+        post.like.remove(req.user)
+    else:
+        post.like.add(req.user)
+    return redirect('post',category_id=post.category.id,post_id=post.id)
+
+
 class PostEdit(UpdateView):
     model = Post
     fields = ('title', 'content',"tags")
@@ -109,3 +121,5 @@ class PostEdit(UpdateView):
         post.save()
         form.save_m2m()
         return redirect('post',category_id=post.category.id,post_id=post.id)
+
+

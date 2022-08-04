@@ -20,6 +20,9 @@
             <h5 class="card-title display-1">{{post.title}}</h5>
             <h6 class="card-subtitle mb-2 text-muted display-5">{{post.category}}</h6>
             <p class="card-text fs-3 ">{{post.content}}</p>
+<!--            like button-->
+            <a href="{% url 'like' post.id %}">like</a>
+
             <p class="card-text mt-auto">
               <strong class="text-primary">{{post.created_by.username}}:</strong> 
               <span class="text-muted align-bottom">{{post.created_dt}}</span>

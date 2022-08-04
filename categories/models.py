@@ -22,8 +22,10 @@ class Post(models.Model):
     created_dt = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to="imgs", blank=True)
     tags = TaggableManager()
-    updated_by=models.ForeignKey(User,null=True,related_name="update",on_delete=models.CASCADE)
-    updated_dt=models.DateTimeField(null=True)
+    updated_by = models.ForeignKey(User, null=True, related_name="update", on_delete=models.CASCADE)
+    updated_dt = models.DateTimeField(null=True)
+    #like
+    like = models.ManyToManyField(User, blank=True)
 
     def __str__(self):
         return self.title
