@@ -1,0 +1,42 @@
+{% extends "categories/base.html" %} {% block title %}admin Page{% endblock %}
+{% block main %}
+
+<div class="container">
+  <div class="d-flex justify-content-center m-3">
+    <a href="{% url 'add_Post' %}"
+      ><button class="btn btn-primary">Add Post</button></a
+    >
+    </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">title</th>
+        <th scope="col">category</th>
+        <th scope="col">created by</th>
+        <th scope="col">actions</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in posts %}
+
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ post.title }}</td>
+        <td>{{ post.category }}</td>
+        <td>{{ post.created_by }}</td>
+        <td>
+
+          <a href="{% url 'edit_Post' post.id %}"
+            ><button class="btn btn-success mx-1">edit</button></a
+          >
+          <a href="{% url 'delete_Post' post.id %}"><button class="btn btn-danger mx-1">delete</button></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{%endblock%}

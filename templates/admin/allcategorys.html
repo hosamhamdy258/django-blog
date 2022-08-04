@@ -1,0 +1,38 @@
+{% extends "categories/base.html" %} {% block title %}admin Page{% endblock %}
+{% block main %}
+
+<div class="container">
+  <div class="d-flex justify-content-center m-3">
+    <a href="{% url 'add_Category' %}"
+      ><button class="btn btn-primary">Add Category</button></a
+    >
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">name</th>
+        <th scope="col">actions</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      {% for category in categorys %}
+
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ category.name }}</td>
+        <td>
+
+          <a href="{% url 'edit_Category' category.id %}"
+            ><button class="btn btn-success mx-1">edit</button></a
+          >
+          <a href="{% url 'delete_Category' category.id %}"><button class="btn btn-danger mx-1">delete</button></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{%endblock%}

@@ -1,0 +1,40 @@
+{% extends "categories/base.html" %} {% block title %}admin Page{% endblock %}
+{% block main %}
+
+<div class="container">
+  <div class="d-flex justify-content-center m-3">
+    <a href="{% url 'add_Comment' %}"
+      ><button class="btn btn-primary">Add Comment</button></a
+    >
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">comment</th>
+        <th scope="col">post</th>
+        <th scope="col">actions</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      {% for comment in comments %}
+
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ comment.massage }}</td>
+        <td>{{ comment.post }}</td>
+        <td>
+          <a href="{% url 'edit_Comment' comment.id %}"
+            ><button class="btn btn-success mx-1">edit</button></a
+          >
+          <a href="{% url 'delete_Comment' comment.id %}"><button class="btn btn-danger mx-1">delete</button></a>
+
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{%endblock%}
