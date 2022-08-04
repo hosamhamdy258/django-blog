@@ -106,8 +106,10 @@ class AdminUsersView(ListView):
             user.is_active = True
         if res["action"] == "make_admin":
             user.is_superuser = True
+            user.is_staff = True
         else:
             user.is_superuser = False
+            user.is_staff = False
         user.save()
         return redirect('all_users')
 
