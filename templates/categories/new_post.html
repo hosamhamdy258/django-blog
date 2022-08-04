@@ -1,11 +1,13 @@
 {% extends "categories/base.html" %}
+{% block header %}{% endblock header %}
+
 {% load widget_tweaks %}
 
 
 {% block title %}New Post{% endblock %}
 
 {% block main %}
-<form method="post" class="container" enctype="multipart/form-data" novalidate> 
+<form method="post" class="container mt-5 mb-5" enctype="multipart/form-data" novalidate> 
     {% csrf_token %}
     {% include 'categories/includes/form.html' %}
           <div class="d-grid gap-2 col-6 mx-auto">

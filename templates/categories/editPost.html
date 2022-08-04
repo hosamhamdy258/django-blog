@@ -1,14 +1,16 @@
 {% extends "categories/base.html" %}
+{% block header %}{% endblock header %}
 {% load widget_tweaks %}
 
 
 {% block title %}edit Post{% endblock %}
 
 {% block main %}
-<form method="post" class="container" novalidate> 
+<h1 class='text-center mt-5 mb-5'>Editing Post</h1>
+<form method="post" class="container mt-5 mb-5" novalidate> 
     {% csrf_token %}
     {% include 'categories/includes/form.html' %}
-          <div class="d-grid gap-2 col-6 mx-auto">
+          <div class="d-grid gap-2 col-6 mx-auto mt-5 mb-5">
         <button class="btn btn-primary mt-2" type="submit">
           <strong>
              Save Changes
