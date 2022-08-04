@@ -1,0 +1,58 @@
+
+{% extends "categories/base.html" %} {% block title %}admin Page{% endblock %}
+{% block main %}
+<form method="post" class="container" novalidate> 
+  {% csrf_token %}
+<div class="container">
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Email</th>
+        <th scope="col">Status</th>
+        <th scope="col">Permissions</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      {% if user.is_superuser %}
+      <tr class="alert-danger">
+      {%else%}
+      <tr>
+
+      {%endif%}
+        <td>{{ forloop.counter }}</td>
+        <td>{{ user.email }}</td>
+   
+        <td>
+          {% if user.is_active %}
+          {% if user.is_superuser %}
+          <button class="btn btn-danger" disabled type="submit" name="clickeduser" value="{'user':{{user.id}},'action':'block'}">block</button>
+          {%else%}
+
+          <button class="btn btn-danger" type="submit" name="clickeduser" value="{'user':{{user.id}},'action':'block'}">block</button>
+          {%endif%}
+          {%else%}
+          <button class="btn btn-success" type="submit" name="clickeduser" value="{'user':{{user.id}},'action':'unblock'}">unblock</button>
+          {%endif%}
+          </td>
+          <td>
+            {% if user.is_superuser %}
+            <button class="btn btn-danger" type="submit" name="clickeduser" value="{'user':{{user.id}},'action':'remove_admin'}">remove admin</button>
+
+            {%else%}
+            <button class="btn btn-success" type="submit" name="clickeduser" value="{'user':{{user.id}},'action':'make_admin'}">make admin</button>
+
+            {%endif%}
+          </td>
+         
+        
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</form >
+
+  {% endblock %}

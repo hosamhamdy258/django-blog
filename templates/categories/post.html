@@ -7,7 +7,7 @@
 {% comment %} {% endcomment %}
 {% if post.created_by == user %}
 <div class="mt-3">
-  <a href="{% url 'edit' post.category.id post.id %}" class="btn btn-primary btn-sm" role="button">Edit</a>
+  <a href="{% url 'editPost' post.category.id post.id %}" class="btn btn-primary btn-sm" role="button">Edit</a>
 </div>
 {% endif %} 
 

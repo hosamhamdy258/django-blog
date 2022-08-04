@@ -1,0 +1,41 @@
+{% extends "categories/base.html" %} {% block title %}admin Page{% endblock %}
+{% block main %}
+
+
+
+<div class=" container text-center">
+
+  <div class="m-2">
+    <a href="{% url 'all_users' %}" class="btn btn-primary fs-4 w-25"
+      >Users</a
+    >
+
+
+  <div class="m-2">
+    <a href="{% url 'all_posts' %}" class="btn btn-primary fs-4 w-25"
+      >Posts</a
+    >
+  </div>
+  
+  <div class="m-2">
+    <a href="{% url 'all_categorys' %}" class="btn btn-primary fs-4 w-25"
+      >categories</a
+    >
+  </div>
+  
+  <div class="m-2">
+    <a href="{% url 'all_comments' %}" class="btn btn-primary fs-4 w-25"
+      >Comments</a
+    >
+  </div>
+  
+
+
+
+
+
+
+</div>
+
+
+{%endblock%}

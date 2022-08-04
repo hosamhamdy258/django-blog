@@ -1,13 +1,17 @@
-from traceback import print_tb
+
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import is_valid_path
 from .models import Category, Post, Comment
 from .forms import NewPostForm, NewCommentForm
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, ListView, CreateView,DeleteView
 from django.utils import timezone
+from django.contrib.auth.models import User
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
 
 
 # Create your views here.
@@ -27,11 +31,10 @@ def homeTags(req, tag_slug):
 
 def searchPosts(req):
     categories = Category.objects.all()
-    posts = Post.objects.filter(title__contains=req.POST['search']).order_by('-created_dt')
+    posts = Post.objects.filter(
+        title__contains=req.POST['search']).order_by('-created_dt')
     return render(req, 'categories/home.html', {'categories': categories, "posts": posts})
 
-    
-    
 
 def new_category(req):
     if req.method == 'POST':
@@ -97,7 +100,7 @@ def post(req, category_id, post_id):
 
 class PostEdit(UpdateView):
     model = Post
-    fields = ('title', 'content',"tags")
+    fields = ('title', 'content', "tags", 'category')
     template_name = 'categories/editPost.html'
     pk_url_kwarg = 'post_id'
     context_object_name = 'post'
@@ -108,4 +111,6 @@ class PostEdit(UpdateView):
         post.updated_dt = timezone.now()
         post.save()
         form.save_m2m()
-        return redirect('post',category_id=post.category.id,post_id=post.id)
+        return redirect('post', category_id=post.category.id, post_id=post.id)
+
+

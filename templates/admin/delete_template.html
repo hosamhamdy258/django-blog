@@ -1,0 +1,20 @@
+{% extends "categories/base.html" %} 
+{% load widget_tweaks %} 
+{% block title%}edit{% endblock %}
+{% block main %}
+<form method="post" class="container" novalidate enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="d-grid gap-2 col-6 mx-auto text-center">
+    <h3>
+    Are you Sure You Want To Delete
+  </h3>
+    <button class="btn btn-primary mt-2" type="submit">
+      <strong> Yes </strong>
+    </button>
+
+    <button class="btn btn-primary mt-2" onclick="javascript:history.go(-1);">
+      <strong> No </strong>
+    </button>
+  </div>
+</form>
+{% endblock main %}
