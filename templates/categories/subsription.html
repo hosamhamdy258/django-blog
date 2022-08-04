@@ -4,55 +4,58 @@
 
 {% block main %}
 
-<h1 class="text-center">hello {{user.username}}</h1>
-<section class="col-12 border rounded p-4">
-    <h2 class="text-center text-bg-dark mb-3 rounded p-2">My Subscriptions:</h2>
+<h1 class="text-center">hellllllo {{user.username}}</h1>
+<div class="container mt-5">
+  <div class="row">
+  <section class="col-12 border rounded p-4 ">
+      <h2 class="text-center text-bg-dark mb-3 rounded p-2">My Subscriptions:</h2>
 
-    {% for post in posts %}
+      {% for post in posts %}
+      <div class="row g-0 mb-2 py-3  border rounded overflow-hidden">
 
-    <div class="row g-0 mb-2 py-3  border rounded overflow-hidden">
+        <div class="col-sm-6">
+          <a href="{% url 'post' category_id=post.category.id post_id=post.pk %}">
+            <img src="/media/{{post.image}}" class="card-img-top h-100 rounded postImg" alt="" />
+          </a>
+        </div>
 
-      <div class="col-sm-7">
-        <a href="{% url 'post' category_id=post.category.id post_id=post.pk %}">
-          <img src="/media/{{post.image}}" class="card-img-top h-100 rounded postImg" alt="" />
-        </a>
+
+
+        <div class="card-body col-sm-6 myCard myCard ">
+
+
+          <strong class="d-inline-block mb-2 text-white cat text-bg-secondary">{{post.category}}</strong>
+          <div class="mb-1 text-muted dt">{{ post.whenpublished }}</div>
+
+          <div class="w-100">
+            <h5 class="card-title mt-4 overflow-hidden tit">{{post.title}}</h5>
+          </div>
+
+
+
+          <div class="text-end read">
+            <a href="{% url 'post' category_id=post.category.id post_id=post.pk %}"
+              class="mt-5 btn btn-primary readlink">Continue Reading</a>
+          </div>
+          <div class="overflow-hidden w-100 tags">
+            {%for tag in post.tags.all%}
+            <button class="btn btn-warning btn-sm mt-4 tagsbutton ">
+              <a href="{% url 'postsTags' tag.slug%}" class="tag">#{{tag.name}}</a>
+            </button>
+            {%endfor%}
+          </div>
+
+        </div>
+
+
       </div>
+      {% empty %}
+      <h3>Sorry, no Posts found.</h3>
 
+      {%endfor%}
 
-
-      <div class="card-body col-sm-5 myCard myCard ">
-
-
-        <strong class="d-inline-block mb-2 text-white cat text-bg-secondary">{{post.category}}</strong>
-        <div class="mb-1 text-muted dt">{{ post.whenpublished }}</div>
-
-        <div class="w-100">
-          <h5 class="card-title mt-4 overflow-hidden tit">{{post.title}}</h5>
-        </div>
-
-
-
-        <div class="text-end read">
-          <a href="{% url 'post' category_id=post.category.id post_id=post.pk %}"
-            class="mt-5 btn btn-primary readlink">Continue Reading</a>
-        </div>
-        <div class="overflow-hidden w-100 tags">
-          {%for tag in post.tags.all%}
-          <button class="btn btn-warning btn-sm mt-4 tagsbutton ">
-            <a href="{% url 'postsTags' tag.slug%}" class="tag">#{{tag.name}}</a>
-          </button>
-          {%endfor%}
-        </div>
-
-      </div>
-
-
-    </div>
-    {% empty %}
-    <h3>Sorry, no Posts found.</h3>
-
-    {%endfor%}
-
-  </section>
+    </section>
+  </div>
+</div>
 
 {% endblock main %}

@@ -162,5 +162,6 @@ def subscription(req):
         #     name=name
         # )
         return redirect('home')
+    category = get_object_or_404(Category, pk=category_id)
     posts = Post.objects.all().order_by('-created_dt')
-    return render(req, 'categories/subsription.html', {"posts": posts})
+    return render(req, 'categories/subsription.html', {"posts": posts, 'category': category})
