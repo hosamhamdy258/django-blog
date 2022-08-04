@@ -27,6 +27,9 @@ class Post(models.Model):
     #like
     like = models.ManyToManyField(User, blank=True)
 
+    def num_likes(self):
+        return self.like.all().count()
+
     def __str__(self):
         return self.title
 

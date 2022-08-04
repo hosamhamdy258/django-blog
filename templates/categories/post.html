@@ -21,8 +21,12 @@
             <h6 class="card-subtitle mb-2 text-muted display-5">{{post.category}}</h6>
             <p class="card-text fs-3 ">{{post.content}}</p>
 <!--            like button-->
-            <a href="{% url 'like' post.id %}">like</a>
-
+            {% if request.user in post.like.all %}
+                <a href="{% url 'like' post.id %}" class="btn btn-primary">dislike</a>
+            {% else %}
+                <a href="{% url 'like' post.id %}" class="btn btn-primary">like</a>
+            {% endif %}
+            <strong>{{post.num_likes}} likes</strong>
             <p class="card-text mt-auto">
               <strong class="text-primary">{{post.created_by.username}}:</strong> 
               <span class="text-muted align-bottom">{{post.created_dt}}</span>
