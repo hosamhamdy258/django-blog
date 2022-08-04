@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'accounts',
     'categories',
-    
+
 ]
 
 MIDDLEWARE = [
@@ -98,13 +98,13 @@ WSGI_APPLICATION = 'Django_Blog.wsgi.application'
 # }
 DATABASES = {
     'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'postgres',
-       'USER': 'postgres',
-       'PASSWORD': '3496',
-       'HOST': 'localhost',
-       'PORT': '5432',
-   }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': '3496',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 
 

@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from traceback import print_tb
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
@@ -15,7 +16,6 @@ from django.utils import timezone
 def home(req):
     categories = Category.objects.all()
     posts = Post.objects.all().order_by('-created_dt')
-
     return render(req, 'categories/home.html', {'categories': categories, "posts": posts})
 
 
@@ -27,7 +27,8 @@ def homeTags(req, tag_slug):
 
 def searchPosts(req):
     categories = Category.objects.all()
-    posts = Post.objects.filter(title__contains=req.POST['search']).order_by('-created_dt')
+    posts = Post.objects.filter(
+        title__contains=req.POST['search']).order_by('-created_dt')
     return render(req, 'categories/home.html', {'categories': categories, "posts": posts})
 
 
@@ -120,20 +121,3 @@ def subscribe_unsubscribe(req, category_id):
         category.subscribe.add(req.user)
 
     return redirect(reverse('home'))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

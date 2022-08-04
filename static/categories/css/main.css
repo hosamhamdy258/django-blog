@@ -1,21 +1,138 @@
 * {
     box-sizing: border-box;
 }
-.myNavLink{
-    display:flex;
-    justify-content:flex-end;
+
+.myNavLink {
+    display: flex;
+    justify-content: flex-end;
 }
+
+.myNAv {
+    position: sticky;
+    z-index: 999;
+    top: 0px;
+    height: 60px;
+}
+
 nav ul li {
-  margin:5px;
+    margin: 5px;
 }
+
 .list-group-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
+
 aside ul li a {
-    text-decoration:none;
+    text-decoration: none;
 }
-.navbar-brand{
-    font-size:28px;
+
+.navbar-brand {
+    font-size: 28px;
+}
+
+.myCard {
+    position: relative;
+}
+
+.myCard .cat {
+    position: absolute;
+    right: 15px;
+    top: 0px;
+    /* backgrSound-color: rgb(223, 212, 212); */
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.myCard .dt {
+    position: absolute;
+    left: 15px;
+    top: 0px;
+    border-radius: 5px;
+    padding: 4px;
+    font-size: 13px;
+}
+
+.myCard .readlink {
+    font-size: 12px;
+}
+
+.myCard .read {
+    position: absolute;
+    bottom: 60px;
+    right: 10px;
+}
+
+.myCard .tit {
+    display: block;
+    max-height: 200px;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.tagsbutton {
+    font-size: 10px;
+}
+
+.tags {
+    position: absolute;
+    bottom: 10;
+}
+
+.postImg {
+    max-height: 350px;
+}
+
+.postsCat {
+    position: sticky;
+    top: 0px;
+    z-index: 9999;
+    background-color: #eee;
+}
+
+.postfoot {
+    display: flex;
+    justify-content: space-between;
+}
+
+.postDate {
+    font-size: 13px;
+}
+
+.postCont {
+    position: relative;
+}
+
+.postCont .bottom2 {
+    position: absolute;
+    left: 20px;
+    bottom: 0;
+}
+
+.postCont .bottom1 {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.postCont .top1 {
+    position: absolute;
+    top: 20px;
+    right: 0%;
+    font-size: 18px;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.commentParg {
+    position: relative;
+}
+
+.commentParg .commentTime {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 13px;
 }
