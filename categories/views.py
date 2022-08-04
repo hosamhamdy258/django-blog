@@ -88,6 +88,7 @@ def post(req, category_id, post_id):
     if req.method == 'POST':
         form = NewCommentForm(req.POST)
         if form.is_valid():
+            
             comment = form.save(commit=False)
             comment.created_by = req.user
             comment.post = post
