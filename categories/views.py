@@ -13,6 +13,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
+from urllib import request
 
 
 # Create your views here.
@@ -99,6 +100,33 @@ def post(req, category_id, post_id):
         form = NewCommentForm()
 
     return render(req, 'categories/post.html', {'post': post, 'form': form})
+
+
+# like_dislike
+def like_post(req, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if req.user in post.like.all():
+        return redirect('post', category_id=post.category.id, post_id=post.id)
+    else:
+        post.like.add(req.user)
+        if req.user in post.dislike.all():
+            post.dislike.remove(req.user)
+    return redirect('post', category_id=post.category.id, post_id=post.id)
+
+
+def dislike_post(req, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if req.user in post.dislike.all():
+        return redirect('post', category_id=post.category.id, post_id=post.id)
+    else:
+        post.dislike.add(req.user)
+        if req.user in post.like.all():
+            post.like.remove(req.user)
+        if post.dislike.all().count() == 4:
+            print("post deleted")
+            post.delete()
+            return redirect('category_posts', category_id=post.category.id)
+    return redirect('post', category_id=post.category.id, post_id=post.id)
 
 
 class PostEdit(UpdateView):

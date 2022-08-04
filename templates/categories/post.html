@@ -23,6 +23,11 @@
       <p class="card-text">{{post.content}}</p>
       <p class="card-text"><small class="text-muted bottom1">{{ post.whenpublished}}</small></p>
       <p class="card-text"><strong class="bottom2 text-info">{{post.created_by.username}}</strong></p>
+      <div class="container">
+        <a href="{% url 'like' post.id %}" class="btn-primary">like</a>
+        <a href="{% url 'dislike' post.id %}" class="btn-primary">dislike</a>
+    </div>
+    <strong>{{post.num_likes}} likes {{post.num_dislikes}} dislikes</strong>
     </div>
   </div>
 
