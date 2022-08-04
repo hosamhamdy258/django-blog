@@ -1,3 +1,4 @@
+from django.forms import ImageField
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.shortcuts import get_object_or_404, render, redirect
@@ -13,6 +14,10 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
+from django.contrib.auth import views, authenticate
+from django.contrib import messages
+from django.contrib.auth.forms import AuthenticationForm
+
 
 # Create your views here.
 
@@ -28,19 +33,33 @@ def signUp(req):
 
     return render(req, 'accounts/signup.html', {'form': form})
 
-
-def block_unblock(req, user_id):
-    users = User.objects.all()
-    user = get_object_or_404(User, pk=user_id)
-    if user.is_active:
-        user.is_active = False
-        user.save()
+def login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request.POST)
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user:
+            auth_login(request, user)
+            return redirect('home')
+        else:
+            try:
+                mod_username = User.objects.get(username=username)
+            except:
+                mod_username = False
+            print(mod_username)
+            if mod_username:
+                if not mod_username.is_active:
+                    messages.error(request, 'User is blocked')
+            else:
+                messages.error(request, 'username or password not correct')
+            return redirect('login')
     else:
-        user.is_active = True
-        user.save()
-    return render(req, 'accounts/block.html', {'user': user, 'users': users})
+        form = AuthenticationForm()
+    return render(request, 'accounts/login.html', {'form': form})
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class PostEditAdmin(UpdateView):
     model = Post
     fields = ('title', 'content', "tags", "category")
@@ -57,6 +76,7 @@ class PostEditAdmin(UpdateView):
         return redirect('all_posts')
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class CategoryEdit(UpdateView):
     model = Category
     fields = ('name',)
@@ -69,6 +89,7 @@ class CategoryEdit(UpdateView):
         return redirect('all_categorys')
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class CommentEdit(UpdateView):
     model = Comment
     fields = ('massage', 'post',)
@@ -88,24 +109,28 @@ class AdminView(ListView):
     template_name = 'admin/adminpanal.html'
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class AdminPostsView(ListView):
     queryset = Post.objects.all().order_by('id')
     context_object_name = 'posts'
     template_name = 'admin/allposts.html'
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class AdminCategorysView(ListView):
     queryset = Category.objects.all().order_by('id')
     context_object_name = 'categorys'
     template_name = 'admin/allcategorys.html'
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class AdminCommentsView(ListView):
     queryset = Comment.objects.all().order_by('id')
     context_object_name = 'comments'
     template_name = 'admin/allcomments.html'
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class AdminUsersView(ListView):
     queryset = User.objects.all().order_by('id')
     context_object_name = 'users'
@@ -129,6 +154,7 @@ class AdminUsersView(ListView):
         return redirect('all_users')
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class AdminCommentAddView(CreateView):
     model = Comment
     context_object_name = 'comment'
@@ -143,6 +169,7 @@ class AdminCommentAddView(CreateView):
         return redirect('all_comments')
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class AdminCategoryAddView(CreateView):
     model = Category
     context_object_name = 'category'
@@ -151,6 +178,7 @@ class AdminCategoryAddView(CreateView):
     success_url = '/adminpanal/allcategorys'
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class AdminPostAddView(CreateView):
     model = Post
     context_object_name = 'post'
@@ -175,6 +203,7 @@ class AdminPostAddView(CreateView):
         return redirect('all_posts')
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class AdminCategoryDeleteView(DeleteView):
     model = Category
     template_name = 'admin/delete_template.html'
@@ -182,6 +211,7 @@ class AdminCategoryDeleteView(DeleteView):
     success_url = '/adminpanal/allcategorys'
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class AdminPostDeleteView(DeleteView):
     model = Post
     template_name = 'admin/delete_template.html'
@@ -189,6 +219,7 @@ class AdminPostDeleteView(DeleteView):
     success_url = '/adminpanal/allposts'
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class AdminCommentDeleteView(DeleteView):
     model = Comment
     template_name = 'admin/delete_template.html'

@@ -5,9 +5,8 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('signup/', views.signUp, name='signup'),
-    path('block/<int:user_id>', views.block_unblock, name='block'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
+    path('login/', views.login, name='login'),
     path('settings/change_password/',auth_views.PasswordChangeView.as_view(template_name='accounts/changePass.html'),name='password_change'),
     path('settings/change_password/done/',auth_views.PasswordChangeDoneView.as_view(template_name='accounts/changePassDone.html'),name='password_change_done'),
     path('adminpanal', views.AdminView.as_view(), name='adminpanal'),
@@ -24,5 +23,4 @@ urlpatterns = [
     path('adminpanal/delete_category/<int:category_id>/', views.AdminCategoryDeleteView.as_view(), name='delete_Category'),
     path('adminpanal/delete_post/<int:post_id>/', views.AdminPostDeleteView.as_view(), name='delete_Post'),
     path('adminpanal/delete_comment/<int:comment_id>/', views.AdminCommentDeleteView.as_view(), name='delete_Comment'),
-
 ]
