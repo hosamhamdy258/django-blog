@@ -11,5 +11,6 @@ urlpatterns = [
     path('categories/<int:category_id>/<int:post_id>/', views.post, name='post'),
     path('categories/<int:category_id>/<int:post_id>/edit', views.PostEdit.as_view(), name='edit'),
     # like
-    path('post/<int:post_id>/like_or_dislike', views.like_dislike, name='like'),
+    path('post/<int:post_id>/like_p', views.like_post, name='like'),
+    path('post/<int:post_id>/dislike_p', views.dislike_post, name='dislike'),
 ]

@@ -31,8 +31,6 @@ def searchPosts(req):
     posts = Post.objects.filter(title__contains=req.POST['search']).order_by('-created_dt')
     return render(req, 'categories/home.html', {'categories': categories, "posts": posts})
 
-    
-    
 
 def new_category(req):
     if req.method == 'POST':
@@ -96,20 +94,36 @@ def post(req, category_id, post_id):
     return render(req, 'categories/post.html', {'post': post, 'form': form})
 
 
-#like_dislike
-def like_dislike(req,post_id):
-    print("like function working")
+# like_dislike
+def like_post(req, post_id):
     post = get_object_or_404(Post, pk=post_id)
     if req.user in post.like.all():
-        post.like.remove(req.user)
+        return redirect('post', category_id=post.category.id, post_id=post.id)
     else:
         post.like.add(req.user)
-    return redirect('post',category_id=post.category.id,post_id=post.id)
+        if req.user in post.dislike.all():
+            post.dislike.remove(req.user)
+    return redirect('post', category_id=post.category.id, post_id=post.id)
+
+
+def dislike_post(req, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if req.user in post.dislike.all():
+        return redirect('post', category_id=post.category.id, post_id=post.id)
+    else:
+        post.dislike.add(req.user)
+        if req.user in post.like.all():
+            post.like.remove(req.user)
+        if post.dislike.all().count() == 4:
+            print("post deleted")
+            post.delete()
+            return redirect('category_posts', category_id=post.category.id)
+    return redirect('post', category_id=post.category.id, post_id=post.id)
 
 
 class PostEdit(UpdateView):
     model = Post
-    fields = ('title', 'content',"tags")
+    fields = ('title', 'content', "tags")
     template_name = 'categories/editPost.html'
     pk_url_kwarg = 'post_id'
     context_object_name = 'post'
@@ -120,6 +134,4 @@ class PostEdit(UpdateView):
         post.updated_dt = timezone.now()
         post.save()
         form.save_m2m()
-        return redirect('post',category_id=post.category.id,post_id=post.id)
-
-
+        return redirect('post', category_id=post.category.id, post_id=post.id)

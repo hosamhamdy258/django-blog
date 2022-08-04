@@ -26,9 +26,13 @@ class Post(models.Model):
     updated_dt = models.DateTimeField(null=True)
     #like
     like = models.ManyToManyField(User, blank=True)
+    dislike = models.ManyToManyField(User, blank=True,related_name="user_dislike")
 
     def num_likes(self):
         return self.like.all().count()
+
+    def num_dislikes(self):
+        return self.dislike.all().count()
 
     def __str__(self):
         return self.title
