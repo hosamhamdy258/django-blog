@@ -13,4 +13,5 @@ urlpatterns = [
     path('categories/<int:category_id>/<int:post_id>/', views.post, name='post'),
     path('post/<int:post_id>/like_p', views.like_post, name='like'),
     path('post/<int:post_id>/dislike_p', views.dislike_post, name='dislike'),
+    path('subscription', views.subscription, name='subscription'),
 ]

@@ -36,7 +36,13 @@
         </button>
       </div>
       {% endif %}
-
+      {% if user.is_authenticated == True %}
+      <div class="text-start">
+        <button class="btn btn-primary mb-2">
+          <a href="{% url 'subscription' %}" class="nav-link">My subscriptions</a>
+        </button>
+      </div>
+      {% endif %}
       <div>
         <ul class="list-group">
           {% for category in categories %}

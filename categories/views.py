@@ -153,3 +153,14 @@ def subscribe_unsubscribe(req, category_id):
         category.subscribe.add(req.user)
 
     return redirect(reverse('home'))
+
+def subscription(req):
+    if req.method == 'POST':
+        # name = req.POST['name']
+
+        # category = Category.objects.create(
+        #     name=name
+        # )
+        return redirect('home')
+    posts = Post.objects.all().order_by('-created_dt')
+    return render(req, 'categories/subsription.html', {"posts": posts})
