@@ -128,6 +128,7 @@ aside ul li a {
 
 .commentParg {
     position: relative;
+    background-color: rgba(212, 205, 205, 0.855);
 }
 
 .commentParg .commentTime {

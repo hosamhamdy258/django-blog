@@ -22,16 +22,16 @@
       <h5 class="card-title top1 text-white text-bg-secondary">{{post.category}}</h5>
       <p class="card-text">{{post.content}}</p>
       <p class="card-text"><small class="text-muted bottom1">{{ post.whenpublished}}</small></p>
-      <p class="card-text"><strong class="bottom2">{{post.created_by.username}}</strong></p>
+      <p class="card-text"><strong class="bottom2 text-info">{{post.created_by.username}}</strong></p>
     </div>
   </div>
 
   {% if post.comments.all %}
   <p>Comments</p>
-  <div class="border border-secondary rounded p-3 mb-2">
+  <div class="border border-secondary rounded p-3 mb-2 ">
     {% for comment in post.comments.all %}
     <p class="border rounded p-2 commentParg">
-      <strong class="">{{comment.created_by.username}}</strong><br>
+      <strong class="text-info">{{comment.created_by.username}}</strong><br>
       <span class=" fs-6 m-0 mx-3 ">{{comment.massage}} </span><br>
       <span class="text-muted commentTime">{{ comment.whenpublished }}</span>
     </p>
