@@ -1,61 +1,169 @@
 {% extends "categories/base.html" %}
-{% load widget_tweaks %}
+{% load widget_tweaks%}
 {% block title %}
 {{post.title}}
 {% endblock %}
 {% block main %}
-{% comment %}{% endcomment %}
+
+{%block header %}
+{% endblock header %}
+
+{% load profanity %}
 
 
-<div class="container col-9 m-auto">
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-8">
+      <!-- Post content-->
+      <article>
+        <!-- Post header-->
+        <header class="mb-1">
+          <!-- Post title-->
+          <h1 class="fw-bolder mb-3">{{post.title}}</h1>
+          <!-- Post meta content-->
+          <div class="text-muted fst-italic mb-2">
+            {{ post.whenpublished}} by
+            <strong>{{post.created_by.username}}</strong>
+          </div>
+          {% if post.created_by == user %}
+          <div class="mt-3 col-12 text-start">
+            <a
+              href="{% url 'editPost' post.category.id post.id %}"
+              class="btn px-3 btn-primary btn"
+              role="button"
+              ><p class="h2 px-5">Edit</p></a
+            >
+          </div>
+          {% endif %}
+          <!-- Post categories-->
+          <a
+            class="badge mt-3 mb-3 bg-secondary text-decoration-none link-light"
+          >
+            <h5>{{post.category}}</h5>
+          </a>
+        </header>
+        <!-- Preview image figure-->
+        <figure>
+          <img
+            class="img-fluid rounded"
+            src="/media/{{post.image}}"
+            alt="..."
+          />
+        </figure>
+        <!-- Post content-->
+        <section>
+          <p class="fs-5 mb-1">{{post.content}}</p>
+        </section>
+      </article>
+      <div class="container ">
+        <span class="mx-3">
+          <strong> {{post.num_likes}} </strong>
+          <a href="{% url 'like' post.id %}" class="btn btn-primary my-3"
+            >LIKE</a
+          >
+        </span>
+        <span class="mx-3">
+          <strong> {{post.num_dislikes}} </strong>
+          <a href="{% url 'dislike' post.id %}" class="btn btn-primary my-3"
+            >DISLIKE</a
+          >
+        </span>
+      </div>
 
-  {% if post.created_by == user %}
-  <div class="mt-3 col-12 text-start">
-    <a href="{% url 'editPost' post.category.id post.id %}" class="btn btn-primary btn" role="button">Edit</a>
-  </div>
-  {% endif %}
+      <!-- Comments section-->
+      <section class="mb-1">
+        <div class="card bg-light">
+          <div class="card-body">
+            <!-- Comment form-->
+            {% comment %}
+            <form class="mb-4">
+              <textarea
+                class="form-control"
+                rows="3"
+                placeholder="Join the discussion and leave a comment!"
+              ></textarea>
+            </form>
+            {% endcomment %}
 
-  <div class="card my-3 col-12 p-3 ">
-    <img src="/media/{{post.image}}" class="img-fluid rounded-start card-img-top" alt="...">
-    <div class="card-body postCont">
-      <h5 class="card-title">{{post.title}}</h5>
-      <h5 class="card-title top1 text-white text-bg-secondary">{{post.category}}</h5>
-      <p class="card-text">{{post.content}}</p>
-      <p class="card-text"><small class="text-muted bottom1">{{ post.whenpublished}}</small></p>
-      <p class="card-text"><strong class="bottom2 text-info">{{post.created_by.username}}</strong></p>
-      <div class="container">
-        <a href="{% url 'like' post.id %}" class="btn btn-primary">like </a>
-        <a href="{% url 'dislike' post.id %}" class="btn btn-primary">dislike</a>
+            <!-- Single comment-->
+            {% if post.comments.all %} {% for comment in post.comments.all %}
+
+            <div class="d-flex mb-3 bg-light">
+              <div class="flex-shrink-0">
+                <img
+                  class="rounded-circle"
+                  src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
+                  alt="..."
+                />
+              </div>
+              <div class="ms-3">
+                <div class="fw-bold">{{comment.created_by.username}}</div>
+               {{comment.massage|censor}}
+
+                <br />
+                <span class="text-muted commentTime"
+                  >{{ comment.whenpublished }}</span
+                >
+              </div>
+            </div>
+            <hr />
+            {% endfor %} {% endif %}
+
+            <form method="post" class="col-12 m-0 p-0" novalidate>
+              {% csrf_token %} {% include 'categories/includes/form.html' %}
+              <div class="text-end">
+                <button type="submit" class="btn btn-success mb-2">
+                  Reply
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
     </div>
-
-    <strong>{{post.num_likes}} likes  </strong>
-      {{post.num_likes}} likes 
-      {{post.num_dislikes}} dislikes
-    </strong>
+    <!-- Side widgets-->
+    <div class="col-lg-4 mt-5">
+      <!-- Search widget-->
+      {% comment %}
+      <div class="card mb-4">
+        <div class="card-header">Search</div>
+        <div class="card-body">
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              placeholder="Enter search term..."
+              aria-label="Enter search term..."
+              aria-describedby="button-search"
+            />
+            <button class="btn btn-primary" id="button-search" type="button">
+              Go!
+            </button>
+          </div>
+        </div>
+      </div>
+      {% endcomment %}
+      <!-- Categories widget-->
+      <div class="card mb-4">
+        <div class="card-header">Categories</div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <ul class="list-unstyled mb-0">
+                {% for category in categories %}
+                <li class="list-group-item">
+                  <a href="{% url 'category_posts' category.pk%}"
+                    ><strong>{{category.name}}</strong></a
+                  >
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-  {% if post.comments.all %}
-  <p>Comments</p>
-  <div class="border border-secondary rounded p-3 mb-2 ">
-    {% for comment in post.comments.all %}
-    <p class="border rounded p-2 commentParg">
-      <strong class="text-info">{{comment.created_by.username}}</strong><br>
-      <span class=" fs-6 m-0 mx-3 ">{{comment.massage}} </span><br>
-      <span class="text-muted commentTime">{{ comment.whenpublished }}</span>
-    </p>
-    {% endfor %}
-  </div>
-  {% endif %}
-
-  <form method="post" class="col-12 m-0 p-0" novalidate>
-    {% csrf_token %} {% include 'categories/includes/form.html' %}
-    <div class="text-end">
-      <button type="submit" class="btn btn-success mb-2">Reply</button>
-    </div>
-  </form>
 </div>
 
 {% endblock main %}
-
-

@@ -106,7 +106,7 @@ class CommentEdit(UpdateView):
 class AdminView(ListView):
     model = User
     context_object_name = 'users'
-    template_name = 'admin/adminpanal.html'
+    template_name = 'admin/adminpanel.html'
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -160,7 +160,7 @@ class AdminCommentAddView(CreateView):
     context_object_name = 'comment'
     template_name = 'admin/edit_template.html'
     fields = ('massage', 'post')
-    success_url = '/adminpanal/allcomments'
+    success_url = '/adminpanel/allcomments'
 
     def form_valid(self, form):
         post = form.save(commit=False)
@@ -175,7 +175,7 @@ class AdminCategoryAddView(CreateView):
     context_object_name = 'category'
     template_name = 'admin/edit_template.html'
     fields = "__all__"
-    success_url = '/adminpanal/allcategorys'
+    success_url = '/adminpanel/allcategorys'
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -184,7 +184,7 @@ class AdminPostAddView(CreateView):
     context_object_name = 'post'
     template_name = 'admin/edit_template.html'
     fields = ['title', 'content', 'tags', 'image', 'category', 'image']
-    success_url = '/adminpanal/allposts'
+    success_url = '/adminpanel/allposts'
 
     def form_valid(self, form):
         post = form.save(commit=False)
@@ -208,7 +208,7 @@ class AdminCategoryDeleteView(DeleteView):
     model = Category
     template_name = 'admin/delete_template.html'
     pk_url_kwarg = 'category_id'
-    success_url = '/adminpanal/allcategorys'
+    success_url = '/adminpanel/allcategorys'
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -216,7 +216,7 @@ class AdminPostDeleteView(DeleteView):
     model = Post
     template_name = 'admin/delete_template.html'
     pk_url_kwarg = 'post_id'
-    success_url = '/adminpanal/allposts'
+    success_url = '/adminpanel/allposts'
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -224,4 +224,4 @@ class AdminCommentDeleteView(DeleteView):
     model = Comment
     template_name = 'admin/delete_template.html'
     pk_url_kwarg = 'comment_id'
-    success_url = '/adminpanal/allcomments'
+    success_url = '/adminpanel/allcomments'

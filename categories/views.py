@@ -1,4 +1,5 @@
 from datetime import date, datetime
+from sre_parse import CATEGORIES
 from traceback import print_tb
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -15,6 +16,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from urllib import request
 from django.core.mail import send_mail
+from better_profanity import profanity
 
 # Create your views here.
 
@@ -87,9 +89,12 @@ def new_post(req, category_id):
 @login_required
 def post(req, category_id, post_id):
     post = get_object_or_404(Post, category__pk=category_id, pk=post_id)
+    categories=Category.objects.all()
+    
     if req.method == 'POST':
         form = NewCommentForm(req.POST)
         if form.is_valid():
+
             comment = form.save(commit=False)
             comment.created_by = req.user
             comment.post = post
@@ -99,7 +104,7 @@ def post(req, category_id, post_id):
     else:
         form = NewCommentForm()
 
-    return render(req, 'categories/post.html', {'post': post, 'form': form})
+    return render(req, 'categories/post.html', {'post': post, 'form': form, 'categories': categories})
 
 
 # like_dislike

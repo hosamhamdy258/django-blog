@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group, User
 
 from .models import Category, Post, Comment
 
-admin.site.site_header = "Blog Panal"
+admin.site.site_header = "Blog Panel"
 # Register your models here.
 
 

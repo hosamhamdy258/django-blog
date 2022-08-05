@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'jazzmin',
     'taggit',
+    'profanity',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -103,7 +104,6 @@ DATABASES = {
        'PORT': '5432',
    }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
