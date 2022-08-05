@@ -5,14 +5,14 @@
 
 
 {% block main %}
-<form method="post" class="container mb-5">
+<form method="post" class="container my-5">
     {% csrf_token %}
     <div class="form-group mb-3">
       <label for="id_subject" class="mb-2"> New Category Name</label>
       <input type="text" class="form-control" id="id_subject" name="name">
     </div>
-          <div class="d-grid gap-2 col-6 mx-auto">
-        <button class="btn btn-primary" type="submit">
+          <div class="d-block gap-2 col mx-auto text-end ">
+        <button class="btn btn-primary px-5" type="submit">
           <strong>
              Add
           </strong>

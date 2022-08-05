@@ -51,7 +51,7 @@ def login(request):
             print(mod_username)
             if mod_username:
                 if not mod_username.is_active:
-                    messages.error(request, 'User is blocked')
+                    messages.error(request, 'Sorry you are blocked contact the admin')
             else:
                 messages.error(request, 'username or password not correct')
             return redirect('login')
