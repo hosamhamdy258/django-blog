@@ -11,3 +11,4 @@ setuptools
 sqlparse
 toml
 wheel
+better_profanity

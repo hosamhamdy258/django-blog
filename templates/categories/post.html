@@ -1,6 +1,8 @@
 {% extends "categories/base.html" %} 
 {% load widget_tweaks%} {% block title %} {{post.title}} {% endblock %} {% block main %} 
 {% comment%}{% endcomment %} {%block header %} {% endblock header %}
+{% load profanity %}
+
 
 <div class="container mt-5">
   <div class="row">
@@ -74,8 +76,9 @@
               </div>
               <div class="ms-3">
                 <div class="fw-bold">{{comment.created_by.username}}</div>
-                 {{comment.massage}}
-                {% comment %} {{comment.massage}} {% endcomment %}
+                {{comment.massage|censor}}
+                 
+                <br>
                 <span class="text-muted commentTime"
                   >{{ comment.whenpublished }}</span
                 >

@@ -12,6 +12,8 @@ from django.views.generic import UpdateView
 from django.utils import timezone
 
 
+from better_profanity import profanity
+
 # Create your views here.
 
 def home(req):
@@ -88,7 +90,7 @@ def post(req, category_id, post_id):
     if req.method == 'POST':
         form = NewCommentForm(req.POST)
         if form.is_valid():
-            
+
             comment = form.save(commit=False)
             comment.created_by = req.user
             comment.post = post
