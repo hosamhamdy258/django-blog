@@ -136,7 +136,7 @@ def dislike_post(req, post_id):
 
 class PostEdit(UpdateView):
     model = Post
-    fields = ('title', 'content', "tags", 'category')
+    fields = ('title', 'content', "tags", 'category',"image")
     template_name = 'categories/editPost.html'
     pk_url_kwarg = 'post_id'
     context_object_name = 'post'
@@ -145,6 +145,16 @@ class PostEdit(UpdateView):
         post = form.save(commit=False)
         post.updated_by = self.request.user
         post.updated_dt = timezone.now()
+        # print(form.data)
+        # print(self.request.form)
+        # image = self.request.FILES["image"]
+        # fss = FileSystemStorage()
+        # fss.save(f"imgs/{image.name}", image)
+        try:
+            if form.data["image"] == "":
+                post.image = "imgs/blank.png"
+        except:
+            pass
         post.save()
         form.save_m2m()
         return redirect('post', category_id=post.category.id, post_id=post.id)
