@@ -33,6 +33,7 @@ def signUp(req):
 
     return render(req, 'accounts/signup.html', {'form': form})
 
+
 def login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request.POST)
@@ -192,12 +193,10 @@ class AdminPostAddView(CreateView):
         post.updated_by = self.request.user
         post.updated_dt = timezone.now()
         try:
-            post.image = f"imgs/{form.FILES['image']}"
-            image = form.FILES["image"]
-            fss = FileSystemStorage()
-            fss.save(f"imgs/{image.name}", image)
+            if form.data["image"] == "":
+                post.image = "imgs/blank.png"
         except:
-            post.image = "imgs/blank.png"
+            pass
         post.save()
         form.save_m2m()
         return redirect('all_posts')
