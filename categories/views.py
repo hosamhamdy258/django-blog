@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from urllib import request
-
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -151,5 +151,7 @@ def subscribe_unsubscribe(req, category_id):
         category.subscribe.remove(req.user)
     else:
         category.subscribe.add(req.user)
-
+        mess = 'hello ' + req.user.first_name + ' You have subscribed successfully in ' + category.name
+        send_mail('confirm subscription',mess,'admin',[req.user.email])
+        print("email sent")
     return redirect(reverse('home'))
